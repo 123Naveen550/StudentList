@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ .form{
+  max-width: 500px;
+  width: 100%;
+  background-color: #2b89e2;
+  margin: 20px auto;
+  padding: 30px;
+}
+ .form {
+  margin-top: 1em;
+  width: 100%;
+}
+
+ .form .Detail-requried {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+ .form .Detail-requried label {
+  width: 180px;
+  color: black;
+  margin-left: 20px;
+  font-size: 15px;
+  font-weight: bold;
+}
+ .form .Detail-requried #name {
+  width: 100%;
+  padding: 8px 10px;
+}
+
+#Title {
+  color: white;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.reset-save {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+/* .reset-save .btn {
+  background: #0cb360;
+  color: #fff;
+  border-radius: 4px;
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  cursor: pointer;
+} */
+/* .reset-save .btn1 {
+  background: #ff0000;
+  color: #fff;
+  border-radius: 4px;
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  cursor: pointer;
+} */
+

@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.Flex-box {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  width: 100%;
+  border: 2px solid black;
+}
+.Header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #0eebd8;
+  padding: 0.5em;
+  font-size: 25px;
+  font-weight: bold;
+  color: white;
+}
+.Heading{
+  background-color:#0eb8eb;
+}
+.Table-data{
+  background-color:lightgray;
+}
+.flex-table {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.Data-table {
+  width: 100%;
+}
+/* .btn-Add {
+  background-color: red;
+  color: #fff;
+  border-radius: 4px;
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  cursor: pointer;
+} */
+
