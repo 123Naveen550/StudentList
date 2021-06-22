@@ -1,115 +1,65 @@
-import axios from 'axios'
-import React,{Component}  from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 import "./Css/Add.css";
-class Addpage extends Component {
-  constructor() {
-    super()
-    this.state = {
-          nameErr:"",
-          emailErr:"",
-          qualificationErr:""
-      }
-  }
-  vaild=()=>{
-    if(!this.newstudentData.name){
-      this.setState({
-        nameErr:"please enter a valid Name."
-      })
-    }
-    else if(this.newstudentData.email!=="@" && this.newstudentData.email!=="."){
-        this.setState({
-          emailErr:"please enter the valid E-mail with @ and ."
-        })
-    }
-    else if(!this.newstudentData.qualification){
-      this.setState({
-        qualificationErr:"please enter valid information."
-      })
-    }
-
-  }
-  newstudentData={}
-
-  stdName=(event)=>{
-    this.newstudentData.name=event.target.value
-  }
-  stdEmail=(event)=>{
-    this.newstudentData.email=event.target.value
-  }
-  stdQaulification=(event)=>{
-    this.newstudentData.qualification=event.target.value
-  }
-  Submit=(event)=>{
-    event.preventDefault();
-    this.newstudentData.currentdate=new Date().toDateString();
-    console.log(this.newstudentData);
-    // if(this.vaild()){
-      axios({
-        method:"post",
-        url:"http://localhost:3031/students",
-        data:this.newstudentData
-      }).then((res)=>{
-        console.log(res)
-        window.location.href="/"
-      },(err)=>{
-        console.log(err)
-      })
-    }
-    
-  // }
+import { useHistory } from 'react-router-dom';
 
 
-  render(){
-    return (
-    <div>            
-       
-       <div class="modal fade" id="Add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-        <div className="form">
-         
-         <div className="Detail-requried">
-        
-           <label>Name</label>
-           <input type="text" name="name" id="name" onChange={this.stdName} placeholder="Name"/>
-         </div>
-         <div className="Detail-requried">
-           <label>Email</label>
-           <input type="text" name="name" id="name" onChange={this.stdEmail} placeholder="Email"/>
-         </div>
-         <div className="Detail-requried">
-           <label>Qualification</label>
-           {/* <select class="form-control" id="make" onChange={this.stdQaulification}>
-             <option value="">- Select -</option>
-             <option value="1">Mca</option>
-             <option value="2">B.tech</option>
-             <option value="3">Bca</option>
-             <option value="4">Mba</option>
-           </select> */}
-  
-           <input type="text" name="name" id="name" onChange={this.stdQaulification} placeholder="Qualification" />
-         </div>
-         <div class="reset-save Detail-requried">
-           <div>
-             <button type="button" class="btn btn-success" onClick={this.Submit}>Submit</button>
-           </div>
-           <div>
-             <button type="reset" class="btn btn-danger">Reset</button>
-           </div>
-         </div>
-       </div>
-       </div>
-          </div>
-          </div>
-        </div>
-    </div>)
+const Addpage = () => {
+  let history = useHistory();
+  const [AddStudent, setAddStudent] = useState({
+    name: "",
+    email: "",
+    qualification: "",
+    currentDateTime: new Date().toDateString()
+  });
+  const { name, email, qualification} = AddStudent;
+
+  const onInputChange = e => {
+    console.log(e.target.value);
+    setAddStudent({...AddStudent,[e.target.name]:e.target.value})
   }
+
+  const onSubmit=async e => {
+    e.preventDefault();
+    await axios.post("http://localhost:3031/students", AddStudent);
+    history.push("/");
+  }
+  return (
+    <div className="Body">
+    <div className="container">
+      <div className="title">
+        Add New Data
+      </div>
+      <form className="form" onSubmit={e=>onSubmit(e)}>
+             <div className="input_field">
+                <label>Name<span className="span">*</span> :</label>                        
+                <input type="text" className="input" name="name" value={name} onChange={e=>onInputChange(e)}/>
+             </div>
+          
+              <div className="input_field">
+                <label>E-mail <span className="span">*</span> :</label>                        
+                <input type="text" className="input" name="email" value={email}    onChange={e=>onInputChange(e)}/>
+              </div>
+          
+              <div className="input_field">
+                <label>Qualification :</label>                              
+                <div className ="custom_select">
+                  <select   onChange={e=>onInputChange(e)} name="qualification" value={qualification}>
+                    <option value=" ">Select</option>
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="M.Tech">M.Tech</option>
+                  </select>
+                </div>
+              </div>
+              <div className="input_field input_button">
+                <button className="btn">Submit</button>
+                <button className="btn" type="reset">Reset</button>
+              </div>
+          </form>
+      </div>
+    </div>
+  )
 }
-export default Addpage
+export default Addpage;

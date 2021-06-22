@@ -1,79 +1,76 @@
-// import axios from "axios";
-import React, { Component } from "react";
 import "./Css/Add.css";
+import React, { useState , useEffect } from 'react';
+import axios from 'axios';
+import { useHistory ,useParams} from 'react-router-dom';
 
-class Edit extends Component {
-  constructor() {
-    super();
-    this.state = {};
+
+const Edit = () => {
+    let history = useHistory();
+    const { id } = useParams();   
+  const [setEditstudent, setsetEditstudent] = useState({
+    name: "",
+    email: "",
+    qualification: "",
+    currentDateTime: new Date().toDateString()
+
+  });
+  const { name, email, qualification} = setEditstudent;
+
+  const onInputChange = e => {
+    console.log(e.target.value);
+    setsetEditstudent({...setEditstudent,[e.target.name]:e.target.value})
   }
 
- render() {
- return (
-  <div>
-    <div
-      class="modal fade"
-      id="Edit"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Edit Student
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div className="form">
-              <div className="Detail-requried">
-                <label>Name</label>
-                <input type="text" name="name" id="name" placeholder="Name" />
-              </div>
-              <div className="Detail-requried">
-                <label>Email</label>
-                <input type="text" name="name" id="name" placeholder="Email" />
-              </div>
-              <div className="Detail-requried">
-                <label>Qualification</label>
-                <select class="form-control" id="make">
-                  <option value="">- Select -</option>
-                  <option value="1">Mca</option>
-                  <option value="2">B.tech</option>
-                  <option value="3">Bca</option>
-                  <option value="4">Mba</option>
-                </select>
-              </div>
+    useEffect(() => {
+        loadStd();
+    }, []);
+  const onSubmit=async e => {
+    e.preventDefault();
+    await axios.put(`http://localhost:3031/students/${id}`, setEditstudent);
+    history.push("/");
+    }
+    
+    const loadStd=async () => {        
+       const result= await axios.get(`http://localhost:3031/students/${id}`);
+        console.log(result);
+        setsetEditstudent(result.data)
+        }
 
-              <div class="reset-save Detail-requried">
-                <div>
-                  <button type="button" class="btn btn-success">
-                    Save
-                  </button>
-                </div>
-                <div>
-                  <button type="button" class="btn btn-danger">
-                    Reset
-                  </button>
+  return (
+    <div className="Body">
+    <div className="container">
+      <div className="title">
+        Edit Data
+      </div>
+      <form className="form" onSubmit={e=>onSubmit(e)}>
+             <div className="input_field">
+                <label>Name<span className="span"></span> :</label>                        
+                <input type="text" className="input" name="name" value={name} onChange={e=>onInputChange(e)}/>
+             </div>
+          
+              <div className="input_field">
+                <label>E-mail <span className="span"></span> :</label>                        
+                <input type="text" className="input" name="email" value={email}    onChange={e=>onInputChange(e)}/>
+              </div>
+          
+              <div className="input_field">
+                <label>Qualification :</label>                              
+                <div className ="custom_select">
+                  <select onChange={e=>onInputChange(e)} name="qualification" value={qualification}>
+                    <option value=" ">Select</option>
+                    <option value="BCA">BCA</option>
+                    <option value="MCA">MCA</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="M.Tech">M.Tech</option>
+                  </select>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+              <div className="input_field input_button">
+                <button className="butn">Submit</button>                
+              </div>
+          </form>
       </div>
     </div>
-  </div>
-);
- }
+  )
 }
-
 export default Edit;

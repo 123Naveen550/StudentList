@@ -1,11 +1,11 @@
 {
   "students": [
     {
-      "name": "meenakshi",
-      "email": "abc@gmail.com",
-      "qualification": "3",
-      "currentdate": "Mon Jun 07 2021",
-      "id": 1
+      "name": "vikrant",
+      "email": "abc@gmail.comq",
+      "qualification": "BCA",
+      "currentdate": "Tue Jun 08 2021",
+      "id": 2
     }
   ]
 }

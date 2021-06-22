@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import axios from "axios";
 import "./Css/home.css";
+
+
 
 export default function Home() {
   const [studentDetail, setstudentDetail] = useState([]);
@@ -13,26 +16,24 @@ export default function Home() {
     setstudentDetail(studentInfo.data);
   };
 
-  const remove =async (id) =>{
-    // alert(id)
-    const detail = await axios.delete(`http://localhost:3031/students/${id}`);
-    console.log(detail);
-    window.location.href="/"
+  const deletedata = async id => {
+    await axios.delete(`http://localhost:3031/students/${id}`);
+    loadstudents();
 }
+   
+
 
   return (
     <div className="Flex-box">
       <div className="Header">
         <div>Student list</div>
         <div className="btn-Add">
-          <button
+          <Link to="/Addpage"><button
             type="button"
             class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#Add"
           >
             ADD
-          </button>
+          </button></Link>
         </div>
       </div>
       <div className="flex-table">
@@ -55,13 +56,13 @@ export default function Home() {
                 <td>{ele.currentdate}</td>
                 <td>
                   <div>
-                    <button type="button" class="btn btn-light" data-toggle="modal"
-            data-target="#Edit">
+                  <Link to={`/Edit/${ele.id}`}> <button type="button" class="btn btn-light"
+           >
                       Edit
-                    </button>
-                    <button type="button" class="btn btn-light" onClick={(id)=>{
-                      remove(ele.id)
-                    }} >
+                    </button></Link> 
+                    <button type="button" class="btn btn-light"  onClick={()=>deletedata(ele.id)}
+                      
+                    >
                       Delete
                     </button>
                   </div>
@@ -73,5 +74,5 @@ export default function Home() {
       </div>
     </div>
   );
-}
+        }
 
